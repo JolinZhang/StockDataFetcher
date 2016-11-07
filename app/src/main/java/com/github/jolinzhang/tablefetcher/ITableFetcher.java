@@ -1,6 +1,5 @@
 package com.github.jolinzhang.tablefetcher;
 
-import java.util.ArrayList;
 
 /**
  * Created by Shadow on 11/6/16.
@@ -8,18 +7,9 @@ import java.util.ArrayList;
 
 public interface ITableFetcher {
 
-    public enum IFetchResult {
-
-        success, failure;
-
-        ArrayList[] getHeader;
-        ArrayList<ArrayList[]> getContent;
-
-    }
-
     public interface IFetchResultHandler {
 
-        public void handle(IFetchResult result);
+        public void handle(FetchResult result);
 
     }
 
