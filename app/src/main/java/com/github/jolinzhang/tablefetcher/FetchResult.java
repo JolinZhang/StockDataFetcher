@@ -10,6 +10,7 @@ public enum FetchResult {
 
     success, failure;
 
+    private String id;
     private ArrayList<String> header;
     private ArrayList<ArrayList<String>> content;
 
@@ -21,11 +22,19 @@ public enum FetchResult {
         return content;
     }
 
+    public String getId() {
+        return id;
+    }
+
     void setContent(ArrayList<ArrayList<String>> content) {
         this.content = content;
     }
 
     void setHeader(ArrayList<String> header) {
         this.header = header;
+    }
+
+    void setId(String id) {
+        this.id = id;
     }
 }

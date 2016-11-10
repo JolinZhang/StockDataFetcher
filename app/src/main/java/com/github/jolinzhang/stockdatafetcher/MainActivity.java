@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ITableFetcher fetcher = null;
-        fetcher.fetch("stock", new ITableFetcher.IFetchResultHandler() {
+        fetcher.fetch("stock", new ITableFetcher.FetchResultHandler() {
             @Override
             public void handle(FetchResult result) {
                 switch (result) {

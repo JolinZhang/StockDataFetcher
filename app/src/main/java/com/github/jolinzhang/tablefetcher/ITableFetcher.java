@@ -7,12 +7,12 @@ package com.github.jolinzhang.tablefetcher;
 
 public interface ITableFetcher {
 
-    public interface IFetchResultHandler {
+    public interface FetchResultHandler {
 
         public void handle(FetchResult result);
 
     }
 
-    public void fetch(String stockName, IFetchResultHandler handler);
+    public void fetch(String stockName, FetchResultHandler handler);
 
 }
