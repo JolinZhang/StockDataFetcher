@@ -14,7 +14,7 @@ import java.util.UUID;
  * Created by Shadow on 11/10/16.
  */
 
-public class HttpRequest implements Runnable {
+class HttpRequest implements Runnable {
 
     public interface ResponseHandler {
         void handle(String id, String responseString);
@@ -33,6 +33,11 @@ public class HttpRequest implements Runnable {
     public void asyncRun() {
         Thread worker = new Thread(this);
         worker.start();
+    }
+
+    @Override
+    public void run() {
+        responseHandler.handle(id, getString());
     }
 
     private String getString() {
@@ -64,8 +69,4 @@ public class HttpRequest implements Runnable {
         return null;
     }
 
-    @Override
-    public void run() {
-        responseHandler.handle(id, getString());
-    }
 }
