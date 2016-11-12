@@ -91,11 +91,12 @@ public class MainActivity extends AppCompatActivity {
                                 });
                                 break;
                             case failure:
+                                final String message = result.getReason();
                                 ac.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         progressBar.setVisibility(View.GONE);
-                                        Toast.makeText(getApplicationContext(), "please input right stock name", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                                     }
                                 });
 
