@@ -41,11 +41,11 @@ class HttpRequest implements Runnable {
     }
 
     private String getString() {
-        System.out.println("begin");
         HttpURLConnection urlConnection = null;
         try {
             URL u = new URL(url);
             urlConnection = (HttpURLConnection) u.openConnection();
+            urlConnection.setConnectTimeout(45 * 1000);
             urlConnection.addRequestProperty("User-Agent", "android");
 
             InputStream is = new BufferedInputStream(urlConnection.getInputStream());
@@ -57,7 +57,6 @@ class HttpRequest implements Runnable {
                 sb.append("\n");
             }
             String responseString = sb.toString();
-            System.out.println("end");
             return responseString;
         } catch (MalformedURLException e) {
             e.printStackTrace();

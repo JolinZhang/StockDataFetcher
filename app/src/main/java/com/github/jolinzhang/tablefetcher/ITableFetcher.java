@@ -15,6 +15,4 @@ public interface ITableFetcher {
 
     public void fetch(String stockName, FetchResultHandler handler);
 
-    public void stop();
-
 }

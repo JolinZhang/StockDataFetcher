@@ -47,11 +47,6 @@ public class TableFetcher implements ITableFetcher {
         request.asyncRun();
     }
 
-    @Override
-    public void stop() {
-
-    }
-
     private ArrayList<String> toHeader(String[] columns) {
         ArrayList<String> header = new ArrayList<>();
         for (int i = 0; i < columns.length; i++) {
