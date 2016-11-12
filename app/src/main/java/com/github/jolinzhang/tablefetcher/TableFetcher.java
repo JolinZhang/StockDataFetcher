@@ -25,15 +25,23 @@ public class TableFetcher implements ITableFetcher {
         final HttpRequest request = new HttpRequest(urlPrefix + stockName + urlSuffix, new HttpRequest.ResponseHandler() {
             @Override
             public void handle(String id, String responseString) {
-                if (responseString == "") { handler.handle(FetchResult.failure); }
-                String[] lines = responseString.split("\n");
-                if (lines.length < 2) { handler.handle(FetchResult.failure); }
-                FetchResult result = FetchResult.success;
-                result.setId(id);
-                String[] columns = lines[0].split(",");
-                result.setHeader(toHeader(columns));
-                result.setContent(toContent(lines, columns.length));
-                handler.handle(result);
+                if (responseString == null) {
+                    handler.handle(FetchResult.failure);
+                }else {
+                    String[] lines = responseString.split("\n");
+                    if (lines.length < 2) {
+                        handler.handle(FetchResult.failure);
+                    } else{
+                        FetchResult result = FetchResult.success;
+                        result.setId(id);
+                        String[] columns = lines[0].split(",");
+                        result.setHeader(toHeader(columns));
+                        result.setContent(toContent(lines, columns.length));
+                        handler.handle(result);
+                    }
+                }
+
+
             }
         });
         request.asyncRun();
