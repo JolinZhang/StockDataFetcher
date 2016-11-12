@@ -10,6 +10,7 @@ public enum FetchResult {
 
     success, failure;
 
+    private String reason;
     private String id;
     private ArrayList<String> header;
     private ArrayList<ArrayList<String>> content;
@@ -26,6 +27,10 @@ public enum FetchResult {
         return id;
     }
 
+    public String getReason() {
+        return reason;
+    }
+
     void setContent(ArrayList<ArrayList<String>> content) {
         this.content = content;
     }
@@ -36,5 +41,9 @@ public enum FetchResult {
 
     void setId(String id) {
         this.id = id;
+    }
+
+    void setReason(String reason) {
+        this.reason = reason;
     }
 }
