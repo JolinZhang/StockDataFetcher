@@ -19,6 +19,7 @@ public class TableFetcher implements ITableFetcher {
         return instance;
     }
 
+
     @Override
     public void fetch(String stockName, final FetchResultHandler handler) {
         final HttpRequest request = new HttpRequest(urlPrefix + stockName + urlSuffix, new HttpRequest.ResponseHandler() {
@@ -36,6 +37,11 @@ public class TableFetcher implements ITableFetcher {
             }
         });
         request.asyncRun();
+    }
+
+    @Override
+    public void stop() {
+
     }
 
     private ArrayList<String> toHeader(String[] columns) {
