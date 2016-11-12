@@ -16,8 +16,9 @@ import java.util.UUID;
 
 class HttpRequest implements Runnable {
 
-    static String TIMEOUTERROR = "TIMEOUTERROR";
-    static String UNKNOWNHOSTERROR = "UNKNOWNHOSTERROR";
+    static final String TIMEOUTERROR = "TIMEOUTERROR";
+    static final String UNKNOWNHOSTERROR = "UNKNOWNHOSTERROR";
+    static final String FILENOTFOUNDERROR = "FILENOTFOUNDERROR";
 
     public interface ResponseHandler {
         void handle(String id, String responseString);
@@ -69,6 +70,9 @@ class HttpRequest implements Runnable {
         } catch (java.net.UnknownHostException e) {
             e.printStackTrace();
             return UNKNOWNHOSTERROR;
+        } catch (java.io.FileNotFoundException e) {
+            e.printStackTrace();
+            return FILENOTFOUNDERROR;
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

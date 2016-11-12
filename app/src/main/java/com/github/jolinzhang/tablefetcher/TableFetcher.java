@@ -26,24 +26,27 @@ public class TableFetcher implements ITableFetcher {
             @Override
             public void handle(String id, String responseString) {
                 FetchResult failureResult = FetchResult.failure;
-                if (responseString == HttpRequest.UNKNOWNHOSTERROR) {
-                    failureResult.setReason("Network error, please check internet connection.");
-                    handler.handle(failureResult);
-                    return;
-                }
-                if (responseString == HttpRequest.TIMEOUTERROR) {
-                    failureResult.setReason("Request timeout.");
-                    handler.handle(failureResult);
-                    return;
+                switch (responseString) {
+                    case HttpRequest.FILENOTFOUNDERROR:
+                        failureResult.setReason("Invalid stock name.");
+                        break;
+                    case HttpRequest.TIMEOUTERROR:
+                        failureResult.setReason("Request timeout error.");
+                        break;
+                    case HttpRequest.UNKNOWNHOSTERROR:
+                        failureResult.setReason("Internet connection error.");
+                        break;
+                    default:
+                        break;
                 }
                 if (responseString == null) {
-                    failureResult.setReason("Invalid stock name");
+                    failureResult.setReason("Unknown error.");
                     handler.handle(failureResult);
                     return;
                 }
                 String[] lines = responseString.split("\n");
                 if (lines.length < 2) {
-                    failureResult.setReason("Invalid stock name");
+                    failureResult.setReason("Server content error.");
                     handler.handle(failureResult);
                     return;
                 }
