@@ -3,7 +3,6 @@ package com.github.jolinzhang.stockdatafetcher;
 import android.app.ActionBar;
 
 import com.github.jolinzhang.tablefetcher.FetchResult;
-import com.github.jolinzhang.tablefetcher.HttpRequest;
 import com.github.jolinzhang.tablefetcher.ITableFetcher;
 import com.github.jolinzhang.tablefetcher.TableFetcher;
 
@@ -25,6 +24,7 @@ public class ExampleUnitTest {
         TableFetcher.getInstance().fetch("INTC", new ITableFetcher.FetchResultHandler() {
             @Override
             public void handle(FetchResult result) {
+                System.out.print(result.getReason());
                 a[0] = true;
                 assertEquals(10, result.getHeader().size());
                 assertEquals(10, result.getContent().size());

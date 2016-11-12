@@ -16,6 +16,9 @@ import java.util.UUID;
 
 class HttpRequest implements Runnable {
 
+    static String TIMEOUTERROR = "TIMEOUTERROR";
+    static String UNKNOWNHOSTERROR = "UNKNOWNHOSTERROR";
+
     public interface ResponseHandler {
         void handle(String id, String responseString);
     }
@@ -60,6 +63,12 @@ class HttpRequest implements Runnable {
             return responseString;
         } catch (MalformedURLException e) {
             e.printStackTrace();
+        } catch (java.net.SocketTimeoutException e) {
+            e.printStackTrace();
+            return TIMEOUTERROR;
+        } catch (java.net.UnknownHostException e) {
+            e.printStackTrace();
+            return UNKNOWNHOSTERROR;
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
