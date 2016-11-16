@@ -11,14 +11,6 @@ public class TableFetcher implements ITableFetcher {
     static String urlPrefix = "http://utdallas.edu/~John.Cole/2016Spring/";
     static String urlSuffix = ".txt";
 
-    private TableFetcher() {}
-
-    private static ITableFetcher instance = new TableFetcher();
-
-    public static ITableFetcher getInstance() {
-        return instance;
-    }
-
     private Boolean enable = true;
 
     @Override
