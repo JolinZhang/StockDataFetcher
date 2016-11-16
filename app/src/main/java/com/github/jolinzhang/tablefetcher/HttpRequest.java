@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Shadow on 11/10/16.
@@ -41,6 +42,12 @@ class HttpRequest implements Runnable {
 
     @Override
     public void run() {
+
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         responseHandler.handle(id, getString());
     }
 

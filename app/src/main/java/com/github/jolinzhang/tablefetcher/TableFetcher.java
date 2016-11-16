@@ -23,13 +23,16 @@ public class TableFetcher implements ITableFetcher {
                 switch (responseString) {
                     case HttpRequest.FILENOTFOUNDERROR:
                         failureResult.setReason("Invalid stock name.");
-                        break;
+                        handler.handle(failureResult);
+                        return;
                     case HttpRequest.TIMEOUTERROR:
                         failureResult.setReason("Request timeout error.");
-                        break;
+                        handler.handle(failureResult);
+                        return;
                     case HttpRequest.UNKNOWNHOSTERROR:
                         failureResult.setReason("Internet connection error.");
-                        break;
+                        handler.handle(failureResult);
+                        return;
                     default:
                         break;
                 }

@@ -17,24 +17,18 @@
         android:id="@+id/stockName"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:lines="1"
         android:hint="Stock Symbol"/>
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:orientation="horizontal">
     <Button
         android:id="@+id/fetch"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_weight="1"
+        android:layout_width="match_parent"
         android:text="Fetch"/>
-    <Button
-        android:id="@+id/cancle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Cancel"/>
+
     </LinearLayout>
     <ProgressBar
         android:id="@+id/processBar"

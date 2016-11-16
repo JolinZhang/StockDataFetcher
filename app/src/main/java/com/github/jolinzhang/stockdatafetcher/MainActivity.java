@@ -17,16 +17,11 @@ import com.github.jolinzhang.tablefetcher.ITableFetcher;
 import com.github.jolinzhang.tablefetcher.TableFetcher;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText stockName;
     private Button mFetch;
-    private Button mCancle;
     private RecyclerView mInfo;
     private ProgressBar progressBar;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -35,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> head;
     private ArrayList<ArrayList<String>> content;
 
+    private int tag = 1;
+
+    private TableFetcher fetcher;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
         stockName = (EditText) findViewById(R.id.stockName);
         mFetch = (Button)findViewById(R.id.fetch);
-        mCancle = (Button)findViewById(R.id.cancle);
         mInfo = (RecyclerView)findViewById(R.id.info);
         progressBar = (ProgressBar)findViewById(R.id.processBar);
 
@@ -67,25 +65,38 @@ public class MainActivity extends AppCompatActivity {
         mFetch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //fetch button
+                if(tag == 1){
+                    tag =2;
+                    mFetch.setText("CANCLE");
                 progressBar.setVisibility(View.VISIBLE);
+                //every time click fetch, clear content in recyclerView
+                recyclerViewAdapter.head = head;
+                recyclerViewAdapter.content = content;
+                recyclerViewAdapter.notifyDataSetChanged();
 
                 //disable key board
-                InputMethodManager inputManager = (InputMethodManager)getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                InputMethodManager inputManager = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
 
                 //get all data
-                TableFetcher.getInstance().fetch(stockName.getText().toString(), new ITableFetcher.FetchResultHandler() {
+                    fetcher = new TableFetcher();
+                    fetcher.fetch(stockName.getText().toString(), new ITableFetcher.FetchResultHandler() {
                     @Override
                     public void handle(FetchResult result) {
                         switch (result) {
                             case success:
                                 recyclerViewAdapter.head = result.getHeader();
                                 recyclerViewAdapter.content = result.getContent();
+
                                 ac.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         progressBar.setVisibility(View.GONE);
+                                        tag =1;
+                                        mFetch.setText("FETCH");
                                         recyclerViewAdapter.notifyDataSetChanged();
                                     }
                                 });
@@ -96,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         progressBar.setVisibility(View.GONE);
+                                        tag =1;
+                                        mFetch.setText("FETCH");
                                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                                     }
                                 });
@@ -105,19 +118,23 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+            }
 
+            //cancel button
+            else{
+                tag =1;
+                mFetch.setText("FETCH");
+                progressBar.setVisibility(View.GONE);
+                    fetcher.drop();
+
+
+
+            }
 
             }
         });
 
 
-
-        mCancle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
 
     }
