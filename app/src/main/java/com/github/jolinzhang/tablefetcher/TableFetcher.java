@@ -3,7 +3,8 @@ package com.github.jolinzhang.tablefetcher;
 import java.util.ArrayList;
 
 /**
- * Created by Shadow on 11/10/16.
+ * Created by Zengtai Qi (zxq150130) on 11/7/16.
+ * The class to fetch stock data.
  */
 
 public class TableFetcher implements ITableFetcher {
@@ -13,6 +14,10 @@ public class TableFetcher implements ITableFetcher {
 
     private Boolean enable = true;
 
+    /**
+     * Created by Zengtai Qi (zxq150130) on 11/7/16.
+     * The method to fetch stock data.
+     */
     @Override
     public void fetch(String stockName, final FetchResultHandler handler) {
         final HttpRequest request = new HttpRequest(urlPrefix + stockName + urlSuffix, new HttpRequest.ResponseHandler() {
@@ -58,11 +63,19 @@ public class TableFetcher implements ITableFetcher {
         request.asyncRun();
     }
 
+    /**
+     * Created by Zengtai Qi (zxq150130) on 11/7/16.
+     * Call this method to drop this request and ignore the possible result.
+     */
     @Override
     public void drop() {
         enable = false;
     }
 
+    /**
+     * Created by Zengtai Qi (zxq150130) on 11/7/16.
+     * The method handle response string and extract header data.
+     */
     private ArrayList<String> toHeader(String[] columns) {
         ArrayList<String> header = new ArrayList<>();
         for (int i = 0; i < columns.length; i++) {
@@ -71,6 +84,10 @@ public class TableFetcher implements ITableFetcher {
         return header;
     }
 
+    /**
+     * Created by Zengtai Qi (zxq150130) on 11/7/16.
+     * The method handle response string and extract content data.
+     */
     private ArrayList<ArrayList<String>> toContent(String[] lines, int width) {
         ArrayList<ArrayList<String>> content = new ArrayList<>();
         for (int i = 1; i < lines.length; i++) {

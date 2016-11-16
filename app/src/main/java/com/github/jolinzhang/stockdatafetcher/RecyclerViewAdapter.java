@@ -1,5 +1,10 @@
 package com.github.jolinzhang.stockdatafetcher;
 
+/**
+ * Created by Ru Zhang (rxz151130) on 11/7/16.
+ * The recyclerView adapter class.
+ */
+
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,22 +13,25 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import java.util.ArrayList;
 
-/**
- * Created by Jonelezhang on 11/10/16.
- */
-
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     ArrayList<String> head;
     ArrayList<ArrayList<String>> content;
     Context context;
 
+    /**
+     * Created by Ru Zhang (rxz151130) on 11/7/16.
+     * The constructor method.
+     */
     public RecyclerViewAdapter( ArrayList<String> head, ArrayList<ArrayList<String>> content, Context context){
         this.head = head;
         this.content = content;
         this.context = context;
     }
 
-
+    /**
+     * Created by Ru Zhang (rxz151130) on 11/7/16.
+     * The method to create view holder.
+     */
     @Override
     public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_adapter,parent,false);
@@ -31,6 +39,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return vh;
     }
 
+    /**
+     * Created by Ru Zhang (rxz151130) on 11/7/16.
+     * The constructor method.
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         if(position == 0){
@@ -52,12 +64,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-
+    /**
+     * Created by Ru Zhang (rxz151130) on 11/7/16.
+     * The delegate method for item count.
+     */
     @Override
     public int getItemCount() {
         return content.size()+head.size();
     }
 
+    /**
+     * Created by Ru Zhang (rxz151130) on 11/7/16.
+     * The viewHolder class.
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public TextView date;
         public TextView open;
@@ -67,6 +86,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public TextView volume;
         public TextView adjClose;
 
+        /**
+         * Created by Ru Zhang (rxz151130) on 11/7/16.
+         * The viewHolder constructor method.
+         */
         public ViewHolder(View itemView){
             super(itemView);
             date = (TextView) itemView.findViewById(R.id.date);

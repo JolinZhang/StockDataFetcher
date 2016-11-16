@@ -1,5 +1,10 @@
 package com.github.jolinzhang.stockdatafetcher;
 
+/**
+ * Created by Ru Zhang (rxz151130) on 11/7/16.
+ * The only one activity class.
+ */
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
 
     private TableFetcher fetcher;
 
+    /**
+     * Created by Ru Zhang (rxz151130) on 11/7/16.
+     * The method that is called every time the activity is creating.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,12 +66,12 @@ public class MainActivity extends AppCompatActivity {
         mInfo.setAdapter(recyclerViewAdapter);
         final Activity ac = this;
 
-
-
-
-
         //fetch button click
         mFetch.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Created by Ru Zhang (rxz151130) on 11/7/16.
+             * The method that is called every time the button is clicked.
+             */
             @Override
             public void onClick(View view) {
 
@@ -70,66 +79,70 @@ public class MainActivity extends AppCompatActivity {
                 if(tag == 1){
                     tag =2;
                     mFetch.setText("CANCLE");
-                progressBar.setVisibility(View.VISIBLE);
-                //every time click fetch, clear content in recyclerView
-                recyclerViewAdapter.head = head;
-                recyclerViewAdapter.content = content;
-                recyclerViewAdapter.notifyDataSetChanged();
+                    progressBar.setVisibility(View.VISIBLE);
+                    //every time click fetch, clear content in recyclerView
+                    recyclerViewAdapter.head = head;
+                    recyclerViewAdapter.content = content;
+                    recyclerViewAdapter.notifyDataSetChanged();
 
-                //disable key board
-                InputMethodManager inputManager = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    //disable key board
+                    InputMethodManager inputManager = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
 
-                //get all data
+                    //get all data
                     fetcher = new TableFetcher();
                     fetcher.fetch(stockName.getText().toString(), new ITableFetcher.FetchResultHandler() {
-                    @Override
-                    public void handle(FetchResult result) {
-                        switch (result) {
-                            case success:
-                                recyclerViewAdapter.head = result.getHeader();
-                                recyclerViewAdapter.content = result.getContent();
+                        /**
+                         * Created by Ru Zhang (rxz151130) on 11/7/16.
+                         * The call back method that is called when the fetch is completed.
+                         */
+                        @Override
+                        public void handle(FetchResult result) {
+                            switch (result) {
+                                case success:
+                                    recyclerViewAdapter.head = result.getHeader();
+                                    recyclerViewAdapter.content = result.getContent();
 
-                                ac.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        progressBar.setVisibility(View.GONE);
-                                        tag =1;
-                                        mFetch.setText("FETCH");
-                                        recyclerViewAdapter.notifyDataSetChanged();
-                                    }
-                                });
-                                break;
-                            case failure:
-                                final String message = result.getReason();
-                                ac.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        progressBar.setVisibility(View.GONE);
-                                        tag =1;
-                                        mFetch.setText("FETCH");
-                                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                                    }
-                                });
+                                    ac.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            progressBar.setVisibility(View.GONE);
+                                            tag =1;
+                                            mFetch.setText("FETCH");
+                                            recyclerViewAdapter.notifyDataSetChanged();
+                                        }
+                                    });
+                                    break;
+                                case failure:
+                                    final String message = result.getReason();
+                                    ac.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            progressBar.setVisibility(View.GONE);
+                                            tag =1;
+                                            mFetch.setText("FETCH");
+                                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                                        }
+                                    });
 
-                                break;
+                                    break;
+                            }
                         }
-                    }
-                });
+                    });
 
-            }
+                }
 
-            //cancel button
-            else{
-                tag =1;
-                mFetch.setText("FETCH");
-                progressBar.setVisibility(View.GONE);
+                //cancel button
+                else{
+                    tag =1;
+                    mFetch.setText("FETCH");
+                    progressBar.setVisibility(View.GONE);
                     fetcher.drop();
 
 
 
-            }
+                }
 
             }
         });
