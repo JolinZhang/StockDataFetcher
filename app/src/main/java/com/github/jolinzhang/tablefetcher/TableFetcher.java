@@ -19,12 +19,14 @@ public class TableFetcher implements ITableFetcher {
         return instance;
     }
 
+    private Boolean enable = true;
 
     @Override
     public void fetch(String stockName, final FetchResultHandler handler) {
         final HttpRequest request = new HttpRequest(urlPrefix + stockName + urlSuffix, new HttpRequest.ResponseHandler() {
             @Override
             public void handle(String id, String responseString) {
+                if (!enable) { return; }
                 FetchResult failureResult = FetchResult.failure;
                 switch (responseString) {
                     case HttpRequest.FILENOTFOUNDERROR:
@@ -59,6 +61,11 @@ public class TableFetcher implements ITableFetcher {
             }
         });
         request.asyncRun();
+    }
+
+    @Override
+    public void drop() {
+        enable = false;
     }
 
     private ArrayList<String> toHeader(String[] columns) {
